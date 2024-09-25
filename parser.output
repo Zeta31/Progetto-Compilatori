@@ -1,0 +1,364 @@
+Grammar
+
+    0 $accept: start $end
+
+    1 start: intestazione SEPARATORE_SEZIONE_1 ciclisti SEPARATORE_SEZIONE_2 tappe
+
+    2 intestazione: DATA_PREFIX DATA
+
+    3 ciclisti: ciclista
+    4         | ciclisti ciclista
+
+    5 ciclista: CODICE_PREFIX CODICE NOME_PREFIX NOME SQUADRA_PREFIX SQUADRA PETTORALE_PREFIX NUMERO_PETTORALE SEPARATORE_CICLISTI
+
+    6 tappe: tappa
+    7      | tappe tappa
+
+    8 tappa: DATA_TAPPA TRATTINO CITTA TRATTINO CITTA TRATTINO risultati_tappa
+
+    9 risultati_tappa: risultato
+   10                | risultato FRECCIA risultati_tappa
+
+   11 risultato: PARENTESI_SX NUMERO_PETTORALE SEP_PETT_TEMPO TEMPO PARENTESI_DX
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+DATA (258) 2
+CODICE (259) 5
+NOME (260) 5
+SQUADRA (261) 5
+DATA_TAPPA (262) 8
+CITTA (263) 8
+TEMPO (264) 11
+NUMERO_PETTORALE (265) 5 11
+DATA_PREFIX (266) 2
+CODICE_PREFIX (267) 5
+NOME_PREFIX (268) 5
+SQUADRA_PREFIX (269) 5
+PETTORALE_PREFIX (270) 5
+SEPARATORE_CICLISTI (271) 5
+SEPARATORE_SEZIONE_1 (272) 1
+SEPARATORE_SEZIONE_2 (273) 1
+TRATTINO (274) 8
+SEP_PETT_TEMPO (275) 11
+PARENTESI_SX (276) 11
+PARENTESI_DX (277) 11
+FRECCIA (278) 10
+
+
+Nonterminals, with rules where they appear
+
+$accept (24)
+    on left: 0
+start (25)
+    on left: 1, on right: 0
+intestazione (26)
+    on left: 2, on right: 1
+ciclisti (27)
+    on left: 3 4, on right: 1 4
+ciclista (28)
+    on left: 5, on right: 3 4
+tappe (29)
+    on left: 6 7, on right: 1 7
+tappa (30)
+    on left: 8, on right: 6 7
+risultati_tappa (31)
+    on left: 9 10, on right: 8 10
+risultato (32)
+    on left: 11, on right: 9 10
+
+
+State 0
+
+    0 $accept: . start $end
+
+    DATA_PREFIX  shift, and go to state 1
+
+    start         go to state 2
+    intestazione  go to state 3
+
+
+State 1
+
+    2 intestazione: DATA_PREFIX . DATA
+
+    DATA  shift, and go to state 4
+
+
+State 2
+
+    0 $accept: start . $end
+
+    $end  shift, and go to state 5
+
+
+State 3
+
+    1 start: intestazione . SEPARATORE_SEZIONE_1 ciclisti SEPARATORE_SEZIONE_2 tappe
+
+    SEPARATORE_SEZIONE_1  shift, and go to state 6
+
+
+State 4
+
+    2 intestazione: DATA_PREFIX DATA .
+
+    $default  reduce using rule 2 (intestazione)
+
+
+State 5
+
+    0 $accept: start $end .
+
+    $default  accept
+
+
+State 6
+
+    1 start: intestazione SEPARATORE_SEZIONE_1 . ciclisti SEPARATORE_SEZIONE_2 tappe
+
+    CODICE_PREFIX  shift, and go to state 7
+
+    ciclisti  go to state 8
+    ciclista  go to state 9
+
+
+State 7
+
+    5 ciclista: CODICE_PREFIX . CODICE NOME_PREFIX NOME SQUADRA_PREFIX SQUADRA PETTORALE_PREFIX NUMERO_PETTORALE SEPARATORE_CICLISTI
+
+    CODICE  shift, and go to state 10
+
+
+State 8
+
+    1 start: intestazione SEPARATORE_SEZIONE_1 ciclisti . SEPARATORE_SEZIONE_2 tappe
+    4 ciclisti: ciclisti . ciclista
+
+    CODICE_PREFIX         shift, and go to state 7
+    SEPARATORE_SEZIONE_2  shift, and go to state 11
+
+    ciclista  go to state 12
+
+
+State 9
+
+    3 ciclisti: ciclista .
+
+    $default  reduce using rule 3 (ciclisti)
+
+
+State 10
+
+    5 ciclista: CODICE_PREFIX CODICE . NOME_PREFIX NOME SQUADRA_PREFIX SQUADRA PETTORALE_PREFIX NUMERO_PETTORALE SEPARATORE_CICLISTI
+
+    NOME_PREFIX  shift, and go to state 13
+
+
+State 11
+
+    1 start: intestazione SEPARATORE_SEZIONE_1 ciclisti SEPARATORE_SEZIONE_2 . tappe
+
+    DATA_TAPPA  shift, and go to state 14
+
+    tappe  go to state 15
+    tappa  go to state 16
+
+
+State 12
+
+    4 ciclisti: ciclisti ciclista .
+
+    $default  reduce using rule 4 (ciclisti)
+
+
+State 13
+
+    5 ciclista: CODICE_PREFIX CODICE NOME_PREFIX . NOME SQUADRA_PREFIX SQUADRA PETTORALE_PREFIX NUMERO_PETTORALE SEPARATORE_CICLISTI
+
+    NOME  shift, and go to state 17
+
+
+State 14
+
+    8 tappa: DATA_TAPPA . TRATTINO CITTA TRATTINO CITTA TRATTINO risultati_tappa
+
+    TRATTINO  shift, and go to state 18
+
+
+State 15
+
+    1 start: intestazione SEPARATORE_SEZIONE_1 ciclisti SEPARATORE_SEZIONE_2 tappe .
+    7 tappe: tappe . tappa
+
+    DATA_TAPPA  shift, and go to state 14
+
+    $default  reduce using rule 1 (start)
+
+    tappa  go to state 19
+
+
+State 16
+
+    6 tappe: tappa .
+
+    $default  reduce using rule 6 (tappe)
+
+
+State 17
+
+    5 ciclista: CODICE_PREFIX CODICE NOME_PREFIX NOME . SQUADRA_PREFIX SQUADRA PETTORALE_PREFIX NUMERO_PETTORALE SEPARATORE_CICLISTI
+
+    SQUADRA_PREFIX  shift, and go to state 20
+
+
+State 18
+
+    8 tappa: DATA_TAPPA TRATTINO . CITTA TRATTINO CITTA TRATTINO risultati_tappa
+
+    CITTA  shift, and go to state 21
+
+
+State 19
+
+    7 tappe: tappe tappa .
+
+    $default  reduce using rule 7 (tappe)
+
+
+State 20
+
+    5 ciclista: CODICE_PREFIX CODICE NOME_PREFIX NOME SQUADRA_PREFIX . SQUADRA PETTORALE_PREFIX NUMERO_PETTORALE SEPARATORE_CICLISTI
+
+    SQUADRA  shift, and go to state 22
+
+
+State 21
+
+    8 tappa: DATA_TAPPA TRATTINO CITTA . TRATTINO CITTA TRATTINO risultati_tappa
+
+    TRATTINO  shift, and go to state 23
+
+
+State 22
+
+    5 ciclista: CODICE_PREFIX CODICE NOME_PREFIX NOME SQUADRA_PREFIX SQUADRA . PETTORALE_PREFIX NUMERO_PETTORALE SEPARATORE_CICLISTI
+
+    PETTORALE_PREFIX  shift, and go to state 24
+
+
+State 23
+
+    8 tappa: DATA_TAPPA TRATTINO CITTA TRATTINO . CITTA TRATTINO risultati_tappa
+
+    CITTA  shift, and go to state 25
+
+
+State 24
+
+    5 ciclista: CODICE_PREFIX CODICE NOME_PREFIX NOME SQUADRA_PREFIX SQUADRA PETTORALE_PREFIX . NUMERO_PETTORALE SEPARATORE_CICLISTI
+
+    NUMERO_PETTORALE  shift, and go to state 26
+
+
+State 25
+
+    8 tappa: DATA_TAPPA TRATTINO CITTA TRATTINO CITTA . TRATTINO risultati_tappa
+
+    TRATTINO  shift, and go to state 27
+
+
+State 26
+
+    5 ciclista: CODICE_PREFIX CODICE NOME_PREFIX NOME SQUADRA_PREFIX SQUADRA PETTORALE_PREFIX NUMERO_PETTORALE . SEPARATORE_CICLISTI
+
+    SEPARATORE_CICLISTI  shift, and go to state 28
+
+
+State 27
+
+    8 tappa: DATA_TAPPA TRATTINO CITTA TRATTINO CITTA TRATTINO . risultati_tappa
+
+    PARENTESI_SX  shift, and go to state 29
+
+    risultati_tappa  go to state 30
+    risultato        go to state 31
+
+
+State 28
+
+    5 ciclista: CODICE_PREFIX CODICE NOME_PREFIX NOME SQUADRA_PREFIX SQUADRA PETTORALE_PREFIX NUMERO_PETTORALE SEPARATORE_CICLISTI .
+
+    $default  reduce using rule 5 (ciclista)
+
+
+State 29
+
+   11 risultato: PARENTESI_SX . NUMERO_PETTORALE SEP_PETT_TEMPO TEMPO PARENTESI_DX
+
+    NUMERO_PETTORALE  shift, and go to state 32
+
+
+State 30
+
+    8 tappa: DATA_TAPPA TRATTINO CITTA TRATTINO CITTA TRATTINO risultati_tappa .
+
+    $default  reduce using rule 8 (tappa)
+
+
+State 31
+
+    9 risultati_tappa: risultato .
+   10                | risultato . FRECCIA risultati_tappa
+
+    FRECCIA  shift, and go to state 33
+
+    $default  reduce using rule 9 (risultati_tappa)
+
+
+State 32
+
+   11 risultato: PARENTESI_SX NUMERO_PETTORALE . SEP_PETT_TEMPO TEMPO PARENTESI_DX
+
+    SEP_PETT_TEMPO  shift, and go to state 34
+
+
+State 33
+
+   10 risultati_tappa: risultato FRECCIA . risultati_tappa
+
+    PARENTESI_SX  shift, and go to state 29
+
+    risultati_tappa  go to state 35
+    risultato        go to state 31
+
+
+State 34
+
+   11 risultato: PARENTESI_SX NUMERO_PETTORALE SEP_PETT_TEMPO . TEMPO PARENTESI_DX
+
+    TEMPO  shift, and go to state 36
+
+
+State 35
+
+   10 risultati_tappa: risultato FRECCIA risultati_tappa .
+
+    $default  reduce using rule 10 (risultati_tappa)
+
+
+State 36
+
+   11 risultato: PARENTESI_SX NUMERO_PETTORALE SEP_PETT_TEMPO TEMPO . PARENTESI_DX
+
+    PARENTESI_DX  shift, and go to state 37
+
+
+State 37
+
+   11 risultato: PARENTESI_SX NUMERO_PETTORALE SEP_PETT_TEMPO TEMPO PARENTESI_DX .
+
+    $default  reduce using rule 11 (risultato)

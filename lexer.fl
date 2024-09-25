@@ -1,0 +1,67 @@
+%{
+#include "parser.tab.h"
+#include "symbol_table.h"
+%}
+%option yylineno
+%s CICLISTI TAPPE
+
+DATA_PREFIX "Data: "
+DATA (0[1-9]|[12][0-9]|3[01])"-"(0[1-9]|1[0-2])"-"[0-9]{2}
+CODICE_PREFIX "Codice: "
+CODICE [a-zA-Z]{2}[0-9]{4}
+NOME_PREFIX "Cognome e nome: "
+NOME [A-Z][a-z]+([ ][A-Z][a-z]+)+
+SQUADRA_PREFIX "Squadra: "
+SQUADRA [a-z ]+
+PETTORALE_PREFIX "Pettorale: "
+NUMERO_PETTORALE [0-9]{3}
+SEPARATORE_CICLISTI "&&&"
+SEPARATORE_SEZIONE_1 "%%"
+SEPARATORE_SEZIONE_2 "$$"
+DATA_TAPPA (0[1-9]|[12][0-9]|3[01])"/"(0[1-9]|1[0-2])
+TRATTINO "-"
+SEP_PETT_TEMPO ":"|","
+CITTA [A-Z][a-z]+
+PARENTESI_SX "("
+PARENTESI_DX ")"
+TEMPO [0-9]{1,2}":"[0-9]{2}":"[0-9]{2}
+FRECCIA "->"
+
+%% 
+{SEPARATORE_SEZIONE_1}     { BEGIN(CICLISTI); return SEPARATORE_SEZIONE_1; }
+{SEPARATORE_SEZIONE_2}     { BEGIN(TAPPE); return SEPARATORE_SEZIONE_2; }
+[ \t\r\n]+                 { /* Ignora spazi, tab e newline */ }
+
+{DATA_PREFIX}              { return DATA_PREFIX; }
+{DATA}                     { yylval.str = strdup(yytext); return DATA; }
+
+<CICLISTI>{
+{CODICE_PREFIX}             { return CODICE_PREFIX; }
+{CODICE}                    { yylval.str = strdup(yytext); return CODICE; }
+{NOME_PREFIX}               { return NOME_PREFIX; }
+{NOME}                      { yylval.str = strdup(yytext); return NOME; }
+{SQUADRA_PREFIX}            { return SQUADRA_PREFIX; }
+{SQUADRA}                   { yylval.str = strdup(yytext); return SQUADRA; }
+{PETTORALE_PREFIX}          { return PETTORALE_PREFIX; }
+{NUMERO_PETTORALE}          { yylval.num = atoi(yytext); return NUMERO_PETTORALE; }
+{SEPARATORE_CICLISTI}       { return SEPARATORE_CICLISTI; }
+}
+
+<TAPPE>{
+{DATA_TAPPA}        { yylval.str = strdup(yytext); return DATA_TAPPA; }
+{TRATTINO}          { return TRATTINO; }
+{SEP_PETT_TEMPO}    { return SEP_PETT_TEMPO; }
+{CITTA}             { yylval.str = strdup(yytext); return CITTA; }
+{PARENTESI_SX}      { return PARENTESI_SX; }
+{NUMERO_PETTORALE}  { yylval.num = atoi(yytext); return NUMERO_PETTORALE; }
+{PARENTESI_DX}      { return PARENTESI_DX; }
+{TEMPO}             { yylval.str = strdup(yytext); return TEMPO; }
+{FRECCIA}           { return FRECCIA; }
+}
+
+.                   { printf("Errore lessicale sulla riga %d\n", yylineno); exit(1); }
+%%
+
+int yywrap() {
+    return 1;
+}

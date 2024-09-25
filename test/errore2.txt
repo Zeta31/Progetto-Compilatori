@@ -1,0 +1,42 @@
+Data: 23-05-24
+%%
+Codice: PQ3274
+Cognome e nome: Giovanni Amato
+Squadra: libertas ct
+Pettorale: 215
+&&&
+Codice: PM4285
+Cognome e nome: Pietro Magri
+Squadra: asd ciclismo pa
+Pettorale: 357
+&&&
+Codice: AP8242
+Cognome e nome: Marco Bonanno
+Squadra: libertas ct
+Pettorale: 818
+&&&
+Codice: AZ6813
+Cognome e nome: Massimo Bonelli
+Squadra: palermo cicismo
+Pettorale: 203
+&&&
+Codice: BY9532
+Cognome e nome: Antonio Cusimano
+Squadra: palermo ciclismo
+Pettorale: 613
+&&&
+Codice: CA4794
+Cognome e nome: Paolo Di Blasi
+Squadra: sporting club
+Pettorale: 418
+&&&
+Codice: PN1137
+Cognome e nome: Manfredi Terranova
+Squadra: asd cefau
+Pettorale: 206
+&&&
+$$
+22/05 - Palermo1 - Cefalu - (203: 2:42:30) -> (215: 2:42:53) -> (206: 2:43:15) -> (613: 2:43:16) -> (418:
+2:43:21) -> (357: 2:44:02) -> (818: 2:44:50)
+23/05 - Cefalu- Messina - (215: 3:55:34) -> (613: 3:55:35) -> (206: 3:55:50) -> (418: 3:55:52) -> (203:
+3:56:48) -> (818: 3:57:10) -> (357: 3:58:30)
